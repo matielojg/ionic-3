@@ -9,6 +9,7 @@ import { CategoriaService } from '../services/domain/categoria.service';
 import { MyApp } from './app.component';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { StorageService } from '../services/storage.service';
+import { ClienteService } from '../services/domain/cliente.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StorageService } from '../services/storage.service';
     CategoriaService,
     ErrorInterceptorProvider,
     AuthService,
-    StorageService
+    StorageService,
+    ClienteService
   ]
 })
 export class AppModule {}
