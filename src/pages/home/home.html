@@ -13,11 +13,11 @@
 <form>
   <ion-item>
     <ion-label stacked>Email</ion-label>
-    <ion-input type="text"></ion-input>
+    <ion-input [(ngModel)]="creds.email" [ngModelOptions]="{standalone: true}" type="text"></ion-input> //biding de atributo
   </ion-item>
   <ion-item>
     <ion-label stacked>Senha</ion-label>
-    <ion-input type="password"></ion-input>
+    <ion-input [(ngModel)]="creds.senha" [ngModelOptions]="{standalone: true}" type="password"></ion-input>
   </ion-item>
   <button ion-button block (click)="login()">Entrar</button>
 </form>
