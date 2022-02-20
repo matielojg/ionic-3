@@ -4,10 +4,14 @@ import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
 import { StorageService } from "./storage.service";
 import { LocalUser } from "../models/local_user";
+import { JwtHelperService  } from '@auth0/angular-jwt';
+
 
 
 @Injectable()
 export class AuthService {
+
+    jwtHelperService: JwtHelperService = new JwtHelperService();
 
     constructor(public http: HttpClient,public storage: StorageService) {
     }
@@ -24,10 +28,10 @@ export class AuthService {
     successfulLogin(authorizationValue : string) {
         let tok = authorizationValue.substring(7);
         let user : LocalUser = {
-            token: tok
+            token: tok,
+            email: this.jwtHelperService.decodeToken(tok).sub
         };
         this.storage.setLocalUser(user);
-        console.log(user);
     }
 
     logout() {
