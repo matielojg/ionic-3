@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { CategoriaService } from '../services/domain/categoria.service';
 import { MyApp } from './app.component';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
+import { StorageService } from '../services/storage.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CategoriaService,
     ErrorInterceptorProvider,
-    AuthService
+    AuthService,
+    StorageService
   ]
 })
 export class AppModule {}
