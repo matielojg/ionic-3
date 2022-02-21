@@ -124,6 +124,12 @@ var AuthService = /** @class */ (function () {
             responseType: 'text'
         });
     };
+    AuthService.prototype.refreshToken = function () {
+        return this.http.post(__WEBPACK_IMPORTED_MODULE_2__config_api_config__["a" /* API_CONFIG */].baseUrl + "/auth/refresh_token", {}, {
+            observe: 'response',
+            responseType: 'text'
+        });
+    };
     AuthService.prototype.successfulLogin = function (authorizationValue) {
         var tok = authorizationValue.substring(7);
         var user = {

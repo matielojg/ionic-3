@@ -70,6 +70,14 @@ var HomePage = /** @class */ (function () {
     HomePage.prototype.ionViewDidLeave = function () {
         this.menu.swipeEnable(true);
     };
+    HomePage.prototype.ionViewDidEnter = function () {
+        var _this = this;
+        this.auth.refreshToken()
+            .subscribe(function (response) {
+            _this.auth.successfulLogin(response.headers.get('Authorization'));
+            _this.navCtrl.setRoot('CategoriasPage');
+        }, function (error) { });
+    };
     HomePage.prototype.login = function () {
         var _this = this;
         this.auth.authenticate(this.creds)
