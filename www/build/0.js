@@ -8,9 +8,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SignupPageModule", function() { return SignupPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_domain_cidade_service__ = __webpack_require__(694);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_estado_service__ = __webpack_require__(695);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__signup__ = __webpack_require__(699);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__signup__ = __webpack_require__(699);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_cidade_service__ = __webpack_require__(694);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_domain_estado_service__ = __webpack_require__(695);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -28,14 +28,14 @@ var SignupPageModule = /** @class */ (function () {
     SignupPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_4__signup__["a" /* SignupPage */],
+                __WEBPACK_IMPORTED_MODULE_2__signup__["a" /* SignupPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_4__signup__["a" /* SignupPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__signup__["a" /* SignupPage */]),
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_2__services_domain_cidade_service__["a" /* CidadeService */],
-                __WEBPACK_IMPORTED_MODULE_3__services_domain_estado_service__["a" /* EstadoService */]
+                __WEBPACK_IMPORTED_MODULE_3__services_domain_cidade_service__["a" /* CidadeService */],
+                __WEBPACK_IMPORTED_MODULE_4__services_domain_estado_service__["a" /* EstadoService */]
             ]
         })
     ], SignupPageModule);
@@ -132,6 +132,8 @@ var EstadoService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_cidade_service__ = __webpack_require__(694);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_domain_estado_service__ = __webpack_require__(695);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_domain_cliente_service__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular_components_alert_alert_controller__ = __webpack_require__(88);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -146,13 +148,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var SignupPage = /** @class */ (function () {
-    function SignupPage(navCtrl, navParams, formBuilder, cidadeService, estadoService) {
+    function SignupPage(navCtrl, navParams, formBuilder, cidadeService, estadoService, clienteService, alertCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.cidadeService = cidadeService;
         this.estadoService = estadoService;
+        this.clienteService = clienteService;
+        this.alertCtrl = alertCtrl;
         this.formGroup = this.formBuilder.group({
             nome: ['Joaquim', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(5), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(120)]],
             email: ['joaquim@gmail.com', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email]],
@@ -190,7 +196,28 @@ var SignupPage = /** @class */ (function () {
         }, function (error) { });
     };
     SignupPage.prototype.signupUser = function () {
-        console.log("enviou o form");
+        var _this = this;
+        this.clienteService.insert(this.formGroup.value)
+            .subscribe(function (response) {
+            _this.showInsertOk();
+        }, function (error) { });
+    };
+    SignupPage.prototype.showInsertOk = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: 'Sucesso!',
+            message: 'Cadastro efetuado com sucesso',
+            enableBackdropDismiss: false,
+            buttons: [
+                {
+                    text: 'Ok',
+                    handler: function () {
+                        _this.navCtrl.pop();
+                    }
+                }
+            ]
+        });
+        alert.present();
     };
     SignupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -200,7 +227,9 @@ var SignupPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_3__services_domain_cidade_service__["a" /* CidadeService */],
-            __WEBPACK_IMPORTED_MODULE_4__services_domain_estado_service__["a" /* EstadoService */]])
+            __WEBPACK_IMPORTED_MODULE_4__services_domain_estado_service__["a" /* EstadoService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_domain_cliente_service__["a" /* ClienteService */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular_components_alert_alert_controller__["a" /* AlertController */]])
     ], SignupPage);
     return SignupPage;
 }());
