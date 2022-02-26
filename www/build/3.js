@@ -45,6 +45,8 @@ var ProdutoDetailPageModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProdutoDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_api_config__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_produto_service__ = __webpack_require__(350);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -56,6 +58,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 /**
  * Generated class for the ProdutoDetailPage page.
  *
@@ -63,22 +67,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ProdutoDetailPage = /** @class */ (function () {
-    function ProdutoDetailPage(navCtrl, navParams) {
+    function ProdutoDetailPage(navCtrl, navParams, produtoService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.produtoService = produtoService;
     }
     ProdutoDetailPage.prototype.ionViewDidLoad = function () {
-        this.item = {
-            id: "1",
-            nome: "Mouse",
-            preco: 80.59
-        };
+        var _this = this;
+        var produto_id = this.navParams.get('produto_id');
+        this.produtoService.findById(produto_id)
+            .subscribe(function (response) {
+            _this.item = response;
+            _this.getImageUrlIfExists();
+        }, function (error) { });
+    };
+    ProdutoDetailPage.prototype.getImageUrlIfExists = function () {
+        var _this = this;
+        this.produtoService.getImageFromBucket(this.item.id)
+            .subscribe(function (response) {
+            _this.item.imageUrl = __WEBPACK_IMPORTED_MODULE_2__config_api_config__["a" /* API_CONFIG */].bucketBaseUrl + "/prod" + _this.item.id + ".jpg";
+        }, function (error) { });
     };
     ProdutoDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-produto-detail',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produto-detail/produto-detail.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>ProdutoDetail</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card>\n    <img [src]="item?.imageUrl || \'assets/imgs/prod.jpg\'"/>\n    <ion-card-content>\n      <ion-card-title>\n        {{item?.nome}}\n        </ion-card-title>\n      <p>\n        {{item?.preco | currency}}\n      </p>\n    </ion-card-content>\n  </ion-card>\n\n  <button ion-button block outline>Adicionar ao carrinho</button>\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produto-detail/produto-detail.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__services_domain_produto_service__["a" /* ProdutoService */]])
     ], ProdutoDetailPage);
     return ProdutoDetailPage;
 }());
