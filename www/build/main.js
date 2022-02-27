@@ -518,7 +518,8 @@ var MyApp = /** @class */ (function () {
         this.pages = [
             { title: 'Profile', component: 'ProfilePage' },
             { title: 'Categoria', component: 'CategoriasPage' },
-            { title: 'Logout', component: '' }
+            { title: 'Logout', component: '' },
+            { title: 'Carrinho', component: 'CartPage' },
         ];
     }
     MyApp.prototype.initializeApp = function () {
