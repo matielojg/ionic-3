@@ -1,4 +1,4 @@
-webpackJsonp([7],{
+webpackJsonp([8],{
 
 /***/ 155:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -184,30 +184,34 @@ webpackEmptyAsyncContext.id = 167;
 var map = {
 	"../pages/cart/cart.module": [
 		692,
-		6
+		7
 	],
 	"../pages/categorias/categorias.module": [
 		693,
-		5
+		6
 	],
 	"../pages/home/home.module": [
 		694,
+		5
+	],
+	"../pages/pick-address/pick-address.module": [
+		695,
 		4
 	],
 	"../pages/produto-detail/produto-detail.module": [
-		695,
+		696,
 		3
 	],
 	"../pages/produtos/produtos.module": [
-		696,
+		697,
 		2
 	],
 	"../pages/profile/profile.module": [
-		697,
+		698,
 		1
 	],
 	"../pages/signup/signup.module": [
-		698,
+		699,
 		0
 	]
 };
@@ -436,6 +440,7 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/cart/cart.module#CartPageModule', name: 'CartPage', segment: 'cart', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/categorias/categorias.module#CategoriasPageModule', name: 'CategoriasPage', segment: 'categorias', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/home/home.module#HomeModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/pick-address/pick-address.module#PickAddressPageModule', name: 'PickAddressPage', segment: 'pick-address', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/produto-detail/produto-detail.module#ProdutoDetailPageModule', name: 'ProdutoDetailPage', segment: 'produto-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/produtos/produtos.module#ProdutosPageModule', name: 'ProdutosPage', segment: 'produtos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
