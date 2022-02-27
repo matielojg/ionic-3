@@ -45,6 +45,8 @@ var PickAddressPageModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PickAddressPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_domain_cliente_service__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_storage_service__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -56,58 +58,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-/**
- * Generated class for the PickAddressPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
+
 var PickAddressPage = /** @class */ (function () {
-    function PickAddressPage(navCtrl, navParams) {
+    function PickAddressPage(navCtrl, navParams, storage, clienteService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.storage = storage;
+        this.clienteService = clienteService;
     }
     PickAddressPage.prototype.ionViewDidLoad = function () {
-        this.items = [
-            {
-                id: "1",
-                logradouro: "Rua Quinze de Novembro",
-                numero: "300",
-                complemento: "Apto 200",
-                bairro: "Santa Mônica",
-                cep: "48293822",
-                cidade: {
-                    id: "1",
-                    nome: "Uberlândia",
-                    estado: {
-                        id: "1",
-                        nome: "Minas Gerais"
-                    }
+        var _this = this;
+        var localUser = this.storage.getLocalUser();
+        if (localUser && localUser.email) {
+            this.clienteService.findByEmail(localUser.email)
+                .subscribe(function (response) {
+                _this.items = response['enderecos'];
+            }, function (error) {
+                if (error.status == 403) {
+                    _this.navCtrl.setRoot('HomePage');
                 }
-            },
-            {
-                id: "2",
-                logradouro: "Rua Alexandre Toledo da Silva",
-                numero: "405",
-                complemento: null,
-                bairro: "Centro",
-                cep: "88933822",
-                cidade: {
-                    id: "3",
-                    nome: "São Paulo",
-                    estado: {
-                        id: "2",
-                        nome: "São Paulo"
-                    }
-                }
-            }
-        ];
+            });
+        }
+        else {
+            this.navCtrl.setRoot('HomePage');
+        }
     };
     PickAddressPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-pick-address',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/pick-address/pick-address.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Fechamento de pedido</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-list>\n        <ion-list-header>\n          Selecione um endereço\n        </ion-list-header>\n        <button ion-item *ngFor="let item of items">\n            <h2>{{item.logradouro}}, {{item.numero}}</h2>\n            <p>{{item.complemento}} {{item.bairro}} CEP {{item.cep}}</p>\n            <p>{{item.cidade.nome}}, {{item.cidade.estado.nome}}</p>\n        </button>\n      </ion-list>\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/pick-address/pick-address.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__services_storage_service__["a" /* StorageService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_domain_cliente_service__["a" /* ClienteService */]])
     ], PickAddressPage);
     return PickAddressPage;
 }());
