@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 699:
+/***/ 700:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,8 +8,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfilePageModule", function() { return ProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(713);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(703);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(714);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(704);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43,7 +43,7 @@ var ProfilePageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 703:
+/***/ 704:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -337,7 +337,7 @@ var Camera = (function (_super) {
 
 /***/ }),
 
-/***/ 713:
+/***/ 714:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -345,9 +345,9 @@ var Camera = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_storage_service__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_cliente_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_cliente_service__ = __webpack_require__(352);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__config_api_config__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(703);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(704);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -373,6 +373,9 @@ var ProfilePage = /** @class */ (function () {
         this.cameraOn = false;
     }
     ProfilePage.prototype.ionViewDidLoad = function () {
+        this.loadData();
+    };
+    ProfilePage.prototype.loadData = function () {
         var _this = this;
         var localUser = this.storage.getLocalUser();
         if (localUser && localUser.email) {
@@ -412,9 +415,21 @@ var ProfilePage = /** @class */ (function () {
         }, function (err) {
         });
     };
+    ProfilePage.prototype.sendPicture = function () {
+        var _this = this;
+        this.clienteService.uploadPicture(this.picture)
+            .subscribe(function (response) {
+            _this.picture = null;
+            _this.loadData();
+        }, function (error) {
+        });
+    };
+    ProfilePage.prototype.cancel = function () {
+        this.picture = null;
+    };
     ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-profile',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-avatar>\n    <img class="circle" [src]="cliente?.imageUrl || \'assets/imgs/avatar-blank.png\'">\n  </ion-avatar>\n  <h2 text-center>{{cliente?.nome}}</h2>\n  <p text-center>{{cliente?.email}}</p>\n\n  <ion-card>\n    <ion-card-header>\n      Enviar imagem de perfil\n    </ion-card-header>\n    <ion-item *ngIf="picture">\n      <img [src]="picture">\n    </ion-item>\n    <ion-item>\n      <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Camera</button>\n    </ion-item>\n  </ion-card>\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/profile/profile.html"*/,
+            selector: 'page-profile',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/profile/profile.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-avatar>\n    <img class="circle" [src]="cliente?.imageUrl || \'assets/imgs/avatar-blank.png\'">\n  </ion-avatar>\n  <h2 text-center>{{cliente?.nome}}</h2>\n  <p text-center>{{cliente?.email}}</p>\n\n  <ion-card>\n    <ion-card-header>\n      Enviar imagem de perfil\n    </ion-card-header>\n    <ion-item *ngIf="picture">\n      <img [src]="picture">\n    </ion-item>\n    <ion-item>\n      <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Camera</button>\n      <button *ngIf="picture" ion-button outline block (click)="sendPicture()">Enviar imagem</button>\n      <button *ngIf="picture" ion-button outline block (click)="cancel()">Descartar imagem</button>\n    </ion-item>\n  </ion-card>\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/profile/profile.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__services_storage_service__["a" /* StorageService */],
             __WEBPACK_IMPORTED_MODULE_3__services_domain_cliente_service__["a" /* ClienteService */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__["a" /* Camera */]])
