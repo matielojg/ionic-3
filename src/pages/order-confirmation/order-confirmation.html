@@ -23,23 +23,23 @@
         <p>{{item.produto.preco | currency}}</p>
         <p class="nolinebreak">{{item.quantidade}}</p>
         <p item-end>{{item.produto.preco * item.quantidade | currency}}</p>
-      </ion-item> 
+      </ion-item>
 
       <ion-item>
         <h2>Total</h2>
         <h2 item-end>{{total() | currency}}</h2>
       </ion-item>
-    </ion-list> 
+    </ion-list>
   </ion-card>
 
   <ion-card>
-      <ion-card-header>
-        Cliente
-      </ion-card-header>
-      <ion-item>
-        <h2>{{cliente?.nome}}</h2>
-        <p>{{cliente?.email}}</p>
-      </ion-item>
+    <ion-card-header>
+      Cliente
+    </ion-card-header>
+    <ion-item>
+      <h2>{{cliente?.nome}}</h2>
+      <p>{{cliente?.email}}</p>
+    </ion-item>
   </ion-card>
 
   <ion-card>
@@ -67,4 +67,6 @@
       <h3>Pagamento com boleto</h3>
     </ion-item>
   </ion-card>
+  <button ion-button block (click)="checkout()">Confirmar pedido</button>
+  <button ion-button block outline (click)="back()">Voltar</button>
 </ion-content>

@@ -1,14 +1,14 @@
 webpackJsonp([2],{
 
-/***/ 699:
+/***/ 700:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProdutosPageModule", function() { return ProdutosPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfilePageModule", function() { return ProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__produtos__ = __webpack_require__(711);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__profile__ = __webpack_require__(713);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,35 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ProdutosPageModule = /** @class */ (function () {
-    function ProdutosPageModule() {
+var ProfilePageModule = /** @class */ (function () {
+    function ProfilePageModule() {
     }
-    ProdutosPageModule = __decorate([
+    ProfilePageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__produtos__["a" /* ProdutosPage */],
+                __WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__produtos__["a" /* ProdutosPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__profile__["a" /* ProfilePage */]),
             ],
         })
-    ], ProdutosPageModule);
-    return ProdutosPageModule;
+    ], ProfilePageModule);
+    return ProfilePageModule;
 }());
 
-//# sourceMappingURL=produtos.module.js.map
+//# sourceMappingURL=profile.module.js.map
 
 /***/ }),
 
-/***/ 711:
+/***/ 713:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProdutosPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_api_config__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_produto_service__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_storage_service__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_cliente_service__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__config_api_config__ = __webpack_require__(45);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,47 +61,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var ProdutosPage = /** @class */ (function () {
-    function ProdutosPage(navCtrl, navParams, produtoService) {
+
+var ProfilePage = /** @class */ (function () {
+    function ProfilePage(navCtrl, navParams, storage, clienteService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.produtoService = produtoService;
+        this.storage = storage;
+        this.clienteService = clienteService;
     }
-    ProdutosPage.prototype.ionViewDidLoad = function () {
+    ProfilePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        var categoria_id = this.navParams.get('categoria_id');
-        this.produtoService.findByCategoria(categoria_id)
-            .subscribe(function (response) {
-            _this.items = response['content'];
-            _this.loadImageUrls();
-        }, function (error) { });
-    };
-    ProdutosPage.prototype.loadImageUrls = function () {
-        var _loop_1 = function () {
-            var item = this_1.items[i];
-            this_1.produtoService.getSmallImageFromBucket(item.id)
+        var localUser = this.storage.getLocalUser();
+        if (localUser && localUser.email) {
+            this.clienteService.findByEmail(localUser.email)
                 .subscribe(function (response) {
-                item.imageUrl = __WEBPACK_IMPORTED_MODULE_2__config_api_config__["a" /* API_CONFIG */].bucketBaseUrl + "/prod" + item.id + "-small.jpg";
-            }, function (error) { });
-        };
-        var this_1 = this;
-        for (var i = 0; i < this.items.length; i++) {
-            _loop_1();
+                _this.cliente = response;
+                _this.getImageIfExists();
+            }, function (error) {
+                if (error.status == 403) {
+                    _this.navCtrl.setRoot('HomePage');
+                }
+            });
+        }
+        else {
+            this.navCtrl.setRoot('HomePage');
         }
     };
-    ProdutosPage.prototype.showDetail = function (produto_id) {
-        this.navCtrl.push('ProdutoDetailPage', { produto_id: produto_id });
+    ProfilePage.prototype.getImageIfExists = function () {
+        var _this = this;
+        this.clienteService.getImageFromBucket(this.cliente.id)
+            .subscribe(function (response) {
+            _this.cliente.imageUrl = __WEBPACK_IMPORTED_MODULE_4__config_api_config__["a" /* API_CONFIG */].bucketBaseUrl + "/cp" + _this.cliente.id + ".jpg";
+        }, function (error) { });
     };
-    ProdutosPage = __decorate([
+    ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-produtos',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produtos/produtos.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Produtos</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-fab top right edge>\n    <button navPush="CartPage" ion-fab mini>\n      <ion-icon name="cart"></ion-icon>\n    </button>\n  </ion-fab>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="showDetail(item.id)">\n      <ion-thumbnail item-start>\n        <img [src]="item.imageUrl || \'assets/imgs/prod.jpg\'">\n      </ion-thumbnail>\n      <h2>{{item.nome}}</h2>\n      <p>{{item.preco | currency}}</p>\n    </button>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produtos/produtos.html"*/,
+            selector: 'page-profile',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/profile/profile.html"*/'\n<ion-header>\n  <ion-navbar>\n    <ion-title>Profile</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-avatar>\n    <img class="circle" [src]="cliente?.imageUrl || \'assets/imgs/avatar-blank.png\'">\n  </ion-avatar>\n  <h2 text-center>{{cliente?.nome}}</h2>\n  <p text-center>{{cliente?.email}}</p>\n</ion-content>\n'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/profile/profile.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__services_domain_produto_service__["a" /* ProdutoService */]])
-    ], ProdutosPage);
-    return ProdutosPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__services_storage_service__["a" /* StorageService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_domain_cliente_service__["a" /* ClienteService */]])
+    ], ProfilePage);
+    return ProfilePage;
 }());
 
-//# sourceMappingURL=produtos.js.map
+//# sourceMappingURL=profile.js.map
 
 /***/ })
 
