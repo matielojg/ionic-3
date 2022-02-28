@@ -68,6 +68,8 @@ var ProdutosPage = /** @class */ (function () {
         this.navParams = navParams;
         this.produtoService = produtoService;
         this.loadingCtrl = loadingCtrl;
+        this.items = [];
+        this.page = 0;
     }
     ProdutosPage.prototype.ionViewDidLoad = function () {
         this.loadData();
@@ -76,16 +78,20 @@ var ProdutosPage = /** @class */ (function () {
         var _this = this;
         var categoria_id = this.navParams.get('categoria_id');
         var loader = this.presentLoading();
-        this.produtoService.findByCategoria(categoria_id)
+        this.produtoService.findByCategoria(categoria_id, this.page, 10)
             .subscribe(function (response) {
-            _this.items = response['content'];
+            var start = _this.items.length;
+            _this.items = _this.items.concat(response['content']);
+            var end = _this.items.length - 1;
             loader.dismiss();
-            _this.loadImageUrls();
+            console.log(_this.page);
+            console.log(_this.items);
+            _this.loadImageUrls(start, end);
         }, function (error) {
             loader.dismiss();
         });
     };
-    ProdutosPage.prototype.loadImageUrls = function () {
+    ProdutosPage.prototype.loadImageUrls = function (start, end) {
         var _loop_1 = function () {
             var item = this_1.items[i];
             this_1.produtoService.getSmallImageFromBucket(item.id)
@@ -94,7 +100,7 @@ var ProdutosPage = /** @class */ (function () {
             }, function (error) { });
         };
         var this_1 = this;
-        for (var i = 0; i < this.items.length; i++) {
+        for (var i = start; i <= end; i++) {
             _loop_1();
         }
     };
@@ -109,14 +115,23 @@ var ProdutosPage = /** @class */ (function () {
         return loader;
     };
     ProdutosPage.prototype.doRefresh = function (refresher) {
+        this.page = 0;
+        this.items = [];
         this.loadData();
         setTimeout(function () {
             refresher.complete();
         }, 1000);
     };
+    ProdutosPage.prototype.doInfinite = function (infiniteScroll) {
+        this.page++;
+        this.loadData();
+        setTimeout(function () {
+            infiniteScroll.complete();
+        }, 1000);
+    };
     ProdutosPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-produtos',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produtos/produtos.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Produtos</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n\n  <ion-fab top right edge>\n    <button navPush="CartPage" ion-fab mini><ion-icon name="cart"></ion-icon></button>\n  </ion-fab>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="showDetail(item.id)">\n      <ion-thumbnail item-start>\n        <img [src]="item.imageUrl || \'assets/imgs/prod.jpg\'">\n      </ion-thumbnail>\n      <h2>{{item.nome}}</h2>\n      <p>{{item.preco | currency}}</p>\n    </button>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produtos/produtos.html"*/,
+            selector: 'page-produtos',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produtos/produtos.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Produtos</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n\n  <ion-fab top right edge>\n    <button navPush="CartPage" ion-fab mini><ion-icon name="cart"></ion-icon></button>\n  </ion-fab>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="showDetail(item.id)">\n      <ion-thumbnail item-start>\n        <img [src]="item.imageUrl || \'assets/imgs/prod.jpg\'">\n      </ion-thumbnail>\n      <h2>{{item.nome}}</h2>\n      <p>{{item.preco | currency}}</p>\n    </button>\n  </ion-list>\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content></ion-infinite-scroll-content>\n  </ion-infinite-scroll>  \n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/produtos/produtos.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],

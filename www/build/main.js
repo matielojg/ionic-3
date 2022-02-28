@@ -320,8 +320,10 @@ var ProdutoService = /** @class */ (function () {
     ProdutoService.prototype.findById = function (produto_id) {
         return this.http.get(__WEBPACK_IMPORTED_MODULE_2__config_api_config__["a" /* API_CONFIG */].baseUrl + "/produtos/" + produto_id);
     };
-    ProdutoService.prototype.findByCategoria = function (categoria_id) {
-        return this.http.get(__WEBPACK_IMPORTED_MODULE_2__config_api_config__["a" /* API_CONFIG */].baseUrl + "/produtos/?categorias=" + categoria_id);
+    ProdutoService.prototype.findByCategoria = function (categoria_id, page, linesPerPage) {
+        if (page === void 0) { page = 0; }
+        if (linesPerPage === void 0) { linesPerPage = 24; }
+        return this.http.get(__WEBPACK_IMPORTED_MODULE_2__config_api_config__["a" /* API_CONFIG */].baseUrl + "/produtos/?categorias=" + categoria_id + "&page=" + page + "&linesPerPage=" + linesPerPage);
     };
     ProdutoService.prototype.getSmallImageFromBucket = function (id) {
         var url = __WEBPACK_IMPORTED_MODULE_2__config_api_config__["a" /* API_CONFIG */].bucketBaseUrl + "/prod" + id + "-small.jpg";
