@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 695:
+/***/ 701:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,8 +8,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrderConfirmationPageModule", function() { return OrderConfirmationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_domain_pedido_service__ = __webpack_require__(702);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__order_confirmation__ = __webpack_require__(708);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_domain_pedido_service__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__order_confirmation__ = __webpack_require__(714);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -43,7 +43,7 @@ var OrderConfirmationPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 702:
+/***/ 704:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84,7 +84,7 @@ var PedidoService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 708:
+/***/ 714:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93,7 +93,7 @@ var PedidoService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_domain_cart_service__ = __webpack_require__(155);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_domain_cliente_service__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_domain_pedido_service__ = __webpack_require__(702);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_domain_pedido_service__ = __webpack_require__(704);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -161,8 +161,8 @@ var OrderConfirmationPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-order-confirmation',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/order-confirmation/order-confirmation.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title *ngIf="codpedido">Pedido registrado!</ion-title>\n    <ion-title *ngIf="!codpedido">Confira seu pedido</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <div *ngIf="!codpedido">\n    <ion-card>\n      <ion-card-header>\n        Itens do pedido\n      </ion-card-header>\n      \n      <ion-list>\n        <ion-item *ngFor="let item of cartItems">\n          <ion-thumbnail item-start>\n            <img [src]="item.produto.imageUrl || \'assets/imgs/prod.jpg\'">\n          </ion-thumbnail>\n          <h2>{{item.produto.nome}}</h2>\n          <p>{{item.produto.preco | currency}}</p>\n          <p class="nolinebreak">{{item.quantidade}}</p>\n          <p item-end>{{item.produto.preco * item.quantidade | currency}}</p>\n        </ion-item> \n\n        <ion-item>\n          <h2>Total</h2>\n          <h2 item-end>{{total() | currency}}</h2>\n        </ion-item>\n      </ion-list> \n    </ion-card>\n\n    <ion-card>\n        <ion-card-header>\n          Cliente\n        </ion-card-header>\n        <ion-item>\n          <h2>{{cliente?.nome}}</h2>\n          <p>{{cliente?.email}}</p>\n        </ion-item>\n    </ion-card>\n\n    <ion-card>\n      <ion-card-header>\n        Endereço de entrega\n      </ion-card-header>\n    \n      <ion-item>\n        <h2>{{endereco?.logradouro}}, {{endereco?.numero}}</h2>\n        <p>{{endereco?.complemento}} {{endereco?.bairro}} CEP {{endereco?.cep}}</p>\n        <p>{{endereco?.cidade.nome}}, {{endereco?.cidade.estado.nome}}</p>\n      </ion-item>\n    </ion-card>\n\n    <ion-card>\n      <ion-card-header>\n        Pagamento\n      </ion-card-header>\n    \n      <ion-item *ngIf="pedido.pagamento[\'@type\']==\'pagamentoComCartao\'">\n        <h3>Pagamento com cartão</h3>\n        <p>Parcelas: {{pedido.pagamento.numeroDeParcelas}}</p>\n      </ion-item>\n      <ion-item *ngIf="pedido.pagamento[\'@type\']==\'pagamentoComBoleto\'">\n        <h3>Pagamento com boleto</h3>\n      </ion-item>\n    </ion-card>\n\n    <button ion-button block (click)="checkout()">Confirmar pedido</button>\n    <button ion-button block outline (click)="back()">Voltar</button>\n  </div>\n\n  <div *ngIf="codpedido">\n    <ion-card>\n        <ion-card-header>\n          Seu pedido foi registrado!\n        </ion-card-header>\n        <ion-item>\n          <h2>Código do pedido: {{codpedido}}</h2>\n          <p>Verifique seu email</p>\n        </ion-item>\n    </ion-card>\n\n    <button ion-button block outline (click)="home()">Voltar</button>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/order-confirmation/order-confirmation.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_domain_cliente_service__["a" /* ClienteService */],
             __WEBPACK_IMPORTED_MODULE_2__services_domain_cart_service__["a" /* CartService */],
             __WEBPACK_IMPORTED_MODULE_4__services_domain_pedido_service__["a" /* PedidoService */]])

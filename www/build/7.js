@@ -93,7 +93,7 @@ var HomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n<h3>Sistema de Pedidos</h3>\n<img src="assets/imgs/tela-inicial.png" alt="logo">\n\n<form>\n  <ion-item>\n    <ion-label stacked>Email</ion-label>\n    <ion-input [(ngModel)]="creds.email" name="email" type="text"></ion-input> //biding de atributo\n  </ion-item>\n  <ion-item>\n    <ion-label stacked>Senha</ion-label>\n    <ion-input [(ngModel)]="creds.senha" name="password" type="password"></ion-input>\n  </ion-item>\n  <button ion-button block (click)="login()">Entrar</button>\n</form>\n<button ion-button block outline (click)="signup()">Registrar</button>\n\n\n</ion-content>\n'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* MenuController */],
             __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]])
     ], HomePage);
     return HomePage;
