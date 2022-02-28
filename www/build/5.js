@@ -1,14 +1,14 @@
 webpackJsonp([5],{
 
-/***/ 694:
+/***/ 696:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeModule", function() { return HomeModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular_module__ = __webpack_require__(354);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(704);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PaymentPageModule", function() { return PaymentPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__payment__ = __webpack_require__(708);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,30 +18,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var HomeModule = /** @class */ (function () {
-    function HomeModule() {
+var PaymentPageModule = /** @class */ (function () {
+    function PaymentPageModule() {
     }
-    HomeModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
-            declarations: [__WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */]],
-            imports: [__WEBPACK_IMPORTED_MODULE_0_ionic_angular_module__["b" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */])]
+    PaymentPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__payment__["a" /* PaymentPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__payment__["a" /* PaymentPage */]),
+            ],
         })
-    ], HomeModule);
-    return HomeModule;
+    ], PaymentPageModule);
+    return PaymentPageModule;
 }());
 
-//# sourceMappingURL=home.module.js.map
+//# sourceMappingURL=payment.module.js.map
 
 /***/ }),
 
-/***/ 704:
+/***/ 708:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PaymentPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_auth_service__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(25);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -54,52 +58,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, menu, auth) {
+var PaymentPage = /** @class */ (function () {
+    function PaymentPage(navCtrl, navParams, formBuilder) {
         this.navCtrl = navCtrl;
-        this.menu = menu;
-        this.auth = auth;
-        this.creds = {
-            email: "",
-            senha: ""
-        };
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.parcelas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.pedido = this.navParams.get('pedido');
+        this.formGroup = this.formBuilder.group({
+            numeroDeParcelas: [1, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            "@type": ["pagamentoComCartao", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]
+        });
     }
-    HomePage.prototype.ionViewWillEnter = function () {
-        this.menu.swipeEnable(false);
+    PaymentPage.prototype.nextPage = function () {
+        this.pedido.pagamento = this.formGroup.value;
+        this.navCtrl.setRoot('OrderConfirmationPage', { pedido: this.pedido });
     };
-    HomePage.prototype.ionViewDidLeave = function () {
-        this.menu.swipeEnable(true);
-    };
-    HomePage.prototype.ionViewDidEnter = function () {
-        var _this = this;
-        this.auth.refreshToken()
-            .subscribe(function (response) {
-            _this.auth.successfulLogin(response.headers.get('Authorization'));
-            _this.navCtrl.setRoot('CategoriasPage');
-        }, function (error) { });
-    };
-    HomePage.prototype.login = function () {
-        var _this = this;
-        this.auth.authenticate(this.creds)
-            .subscribe(function (response) {
-            _this.auth.successfulLogin(response.headers.get('Authorization'));
-            _this.navCtrl.setRoot('CategoriasPage');
-        }, function (error) { });
-    };
-    HomePage.prototype.signup = function () {
-        this.navCtrl.push('SignupPage');
-    };
-    HomePage = __decorate([
+    PaymentPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n<h3>Sistema de Pedidos</h3>\n<img src="assets/imgs/tela-inicial.png" alt="logo">\n\n<form>\n  <ion-item>\n    <ion-label stacked>Email</ion-label>\n    <ion-input [(ngModel)]="creds.email" name="email" type="text"></ion-input> //biding de atributo\n  </ion-item>\n  <ion-item>\n    <ion-label stacked>Senha</ion-label>\n    <ion-input [(ngModel)]="creds.senha" name="password" type="password"></ion-input>\n  </ion-item>\n  <button ion-button block (click)="login()">Entrar</button>\n</form>\n<button ion-button block outline (click)="signup()">Registrar</button>\n\n\n</ion-content>\n'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/home/home.html"*/
+            selector: 'page-payment',template:/*ion-inline-start:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/payment/payment.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>s\n    <ion-title>Forma de pagamento</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <form [formGroup]="formGroup" (ngSubmit)="nextPage(); $event.preventDefault()">\n    <ion-list radio-group formControlName="@type">\n      <ion-list-header>\n        Tipo de pagamento\n      </ion-list-header>\n      <ion-item>\n        <ion-label>Pagamento com cartão</ion-label>\n        <ion-radio checked="true" value="pagamentoComCartao"></ion-radio>\n      </ion-item>\n      <ion-item>\n        <ion-label>Pagamento com boleto</ion-label>\n        <ion-radio value="pagamentoComBoleto"></ion-radio>\n      </ion-item>\n    </ion-list>\n\n    <ion-item *ngIf="formGroup.value[\'@type\'] == \'pagamentoComCartao\'">\n      <ion-label stacked>Parcelas no boleto</ion-label>\n      <ion-select formControlName="numeroDeParcelas">\n        <ion-option *ngFor="let n of parcelas; first as f" [value]="n" [selected]="f">{{n}}</ion-option>\n      </ion-select>\n    </ion-item>\n    <button ion-button block type="submit" [disabled]="formGroup.invalid">Próximo</button>\n  </form>\n</ion-content>'/*ion-inline-end:"/home/aspire/Documentos/sts-project/ws-ionic/Ionic3/src/pages/payment/payment.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */],
-            __WEBPACK_IMPORTED_MODULE_2__services_auth_service__["a" /* AuthService */]])
-    ], HomePage);
-    return HomePage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
+    ], PaymentPage);
+    return PaymentPage;
 }());
 
-//# sourceMappingURL=home.js.map
+//# sourceMappingURL=payment.js.map
 
 /***/ })
 
